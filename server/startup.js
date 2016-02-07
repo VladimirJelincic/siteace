@@ -11,7 +11,8 @@ Meteor.startup(function () {
             upVotes: 0,
             downVotes: 0,
             createdBy: 0,
-            Votes: 0
+            Votes: 0,
+            comments : []
 
         });
         Websites.insert({
@@ -22,7 +23,8 @@ Meteor.startup(function () {
             upVotes: 0,
             downVotes: 0,
             createdBy: 0,
-            Votes: 0
+            Votes: 0,
+            comments : []
         });
         Websites.insert({
             title: "Coursera",
@@ -32,7 +34,8 @@ Meteor.startup(function () {
             upVotes: 0,
             downVotes: 0,
             createdBy: 0,
-            Votes: 0
+            Votes: 0,
+            comments : []
         });
         Websites.insert({
             title: "Google",
@@ -42,7 +45,8 @@ Meteor.startup(function () {
             upVotes: 0,
             downVotes: 0,
             createdBy: 0,
-            Votes: 0
+            Votes: 0,
+            comments : []
         });
     }
 });

@@ -9,10 +9,10 @@
 
 <template name="ApplicationLayout">
     {{> yield "navbar"}}
-    <div class="container">
-        {{> yield "website_form"}}
-        {{> yield "website_list"}}
-    </div>
+
+    {{> yield "main"}}
+
+
 </template>
 
 <template name="navbar">
@@ -60,11 +60,14 @@
 
 <!-- template that displays several website items -->
 <template name="website_list">
-    <ol>
-        {{#each websites}}
-            {{>website_item}}
-        {{/each}}
-    </ol>
+    <div class="container">
+        {{>website_form}}
+        <ol>
+            {{#each websites}}
+                {{>website_item}}
+            {{/each}}
+        </ol>
+    </div>
 </template>
 
 <!-- template that displays individual website entries -->
@@ -74,7 +77,7 @@
         <p>
             {{description}}
         </p>
-
+        <p><a href="/details/{{_id}}">Details...</a></p>
         {{#if currentUser }}
             <a href="#" class="btn btn-default js-upvote">
                 <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
@@ -87,6 +90,43 @@
         <p><span class="label label-success label-as-badge">Upvotes: {{upVote}} </span>
             <span class="label label-danger label-as-badge">Downvotes: {{downVote}}</span>
             <span class="badge"> Votes: {{Votes}}</span></p>
-        <p class="small"><i>added:{{prettifyDate createdOn}}</i></p>
+        <p class="small"><i>added:{{prettifyDate createdOn}} by <b>{{username createdBy}}</b></i></p>
     </li>
+</template>
+<template name="website_detail">
+    <div class="container">
+        <a href="/">back</a>
+        <a href="{{url}}"><h2>{{title}}</h2></a>
+
+        <p>
+            {{description}}
+        </p>
+        <p>
+
+            <p>Comments</p>
+            {{#if currentUser }}
+                <form class="js-save-comment-form">
+                    <div class="form-group">
+
+                        <textarea class="input-group" rows="4" cols="50" id="commentnew" placeholder="add comment"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            {{/if}}
+
+        <ol>
+            {{#each comments}}
+
+                <div class="panel">
+            <div class="panel panel-body">{{text}}</div>
+              <div class="panel-heading">  <i class="small">added:{{prettifyDate createdOn}} by <b>{{username createdBy}}</b></i></div>
+                </div>
+
+            {{/each}}
+        </ol>
+        </p>
+        <p><a href="/">Back</a></p>
+
+
+    </div>
 </template>
