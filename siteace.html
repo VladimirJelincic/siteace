@@ -1,0 +1,92 @@
+<head>
+    <title>siteace</title>
+</head>
+
+<body>
+
+
+</body>
+
+<template name="ApplicationLayout">
+    {{> yield "navbar"}}
+    <div class="container">
+        {{> yield "website_form"}}
+        {{> yield "website_list"}}
+    </div>
+</template>
+
+<template name="navbar">
+    <!-- navbar  - you will be putting the login functions here -->
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    Site Ace
+                </a>
+                {{>loginButtons }}
+            </div>
+
+
+        </div>
+    </nav>
+</template>
+
+<template name="website_form">
+    {{#if currentUser }}
+        <a class="btn btn-default js-toggle-website-form" href="#">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </a>
+        <div id="website_form" class="hidden_div">
+            <form class="js-save-website-form">
+                <div class="form-group">
+                    <label for="url">Site address</label>
+                    <input type="text" class="form-control" id="url" placeholder="http://www.mysite.com">
+                </div>
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input type="text" class="form-control" id="title" placeholder="Mysite">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control" id="description"
+                           placeholder="I found this site really useful for ...">
+                </div>
+
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
+    {{/if}}
+</template>
+
+<!-- template that displays several website items -->
+<template name="website_list">
+    <ol>
+        {{#each websites}}
+            {{>website_item}}
+        {{/each}}
+    </ol>
+</template>
+
+<!-- template that displays individual website entries -->
+<template name="website_item">
+    <li>
+        <a href="{{url}}">{{title}}</a>
+        <p>
+            {{description}}
+        </p>
+
+        {{#if currentUser }}
+            <a href="#" class="btn btn-default js-upvote">
+                <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+            </a>
+            <a href="#" class="btn btn-default js-downvote">
+                <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+            </a>
+        {{/if}}
+        <!-- you will be putting your up and down vote buttons in here! -->
+        <p><span class="label label-success label-as-badge">Upvotes: {{upVote}} </span>
+            <span class="label label-danger label-as-badge">Downvotes: {{downVote}}</span>
+            <span class="badge"> Votes: {{Votes}}</span></p>
+        <p class="small"><i>added:{{prettifyDate createdOn}}</i></p>
+    </li>
+</template>
