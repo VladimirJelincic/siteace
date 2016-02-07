@@ -29,13 +29,54 @@ Router.route('/details/:_id', function () {
 /////
 // template helpers
 /////
+Template.navbar.events({
+    "click .js-click-search": function (event) {
+        console.log("clicked search");
+        var search = $("#searchBox").val();
+        if (search) {
+            console.log(search);
+            Session.set("searchFilter", search);
+        } else {
+            Session.set("searchFilter", undefined);
+            console.log("blank");
+        }
+        return false;
+    },
+    "click .js-click-reset": function (event) {
+        console.log("clicked reset");
+        $("#searchBox").val("");
+        Session.set("searchFilter", undefined);
 
+        return false;
+    },
+
+})
 // helper function that returns all available websites
 Template.website_list.helpers({
     websites: function () {
-        return Websites.find({}, {sort: {Votes: -1}});
+        var searchVar = Session.get("searchFilter");
+        console.log("websites run");
+        console.log(searchVar);
+        if (searchVar) {
+            console.log(Session.get("searchFilter"));
+            return Websites.find(
+                {
+                    $or: [
+
+                        {description: {$regex: ".*" + searchVar + ".*", $options: 'i'}},
+                        {title: {$regex: ".*" + searchVar + ".*", $options: 'i'}},
+                        {url: {$regex: ".*" + searchVar + ".*", $options: 'i'}}
+                    ]
+                } , {sort: {Votes: -1}});
+
+        } else {
+
+            return Websites.find({}, {sort: {Votes: -1}});
+        }
     }
 });
+
+
 Template.registerHelper("prettifyDate", function (timestamp) {
     return moment(new Date(timestamp)).fromNow();
 });
@@ -52,7 +93,7 @@ Template.registerHelper("username", function (userId) {
 /////
 // template events
 /////
-
+Template.navbar.events({})
 Template.website_item.events({
     "click .js-upvote": function (event) {
         // example of how you can access the id for the website in the database
@@ -105,6 +146,10 @@ Template.website_detail.events({
 
 });
 Template.website_form.events({
+
+    "click .js-get-url": function (event) {
+        console.log("blur")
+    },
     "click .js-toggle-website-form": function (event) {
 
         $("#url").val("");

@@ -24,16 +24,3 @@ Can you recommend websites to users based on things they have up voted and comme
 
 You should deploy your application using the Meteor deploy command and submit a link to the site running on the Meteor server.
 
- comments: [
-                {
-                    comment: "test comment",
-                    createdBy: 1,
-                    createdOn: new Date(),
-                },
-                {
-                    comment: "test comment2",
-                    createdBy: 2,
-                    createdOn: new Date(),
-                },
-
-            ]
